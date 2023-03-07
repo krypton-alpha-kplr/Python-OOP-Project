@@ -2,8 +2,9 @@ class Product:
     def __init__(self, cost, price, marque):
         self.cost = cost
         self.price = price
-        self.marque = marque
+        self.marque = marque#
 
+# test
     def afficher_attributs(self):
         print("Attributs du Produit :")
         print("- cost :", self.cost)
