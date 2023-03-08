@@ -41,7 +41,7 @@ def generate_class_hierarchy(json_dict :dict, superclass_name:str=None,superclas
     """
 
     for class_name, class_attrs in json_dict.items():
-        class_def= generate_class_def(class_name,class_attrs, superclass_name,superclass_args) # Class_Def ???????
+        class_def= generate_class_def(class_name,class_attrs, superclass_name,superclass_args)
         class_defs+= class_def
 
         """
@@ -56,9 +56,7 @@ def generate_class_hierarchy(json_dict :dict, superclass_name:str=None,superclas
                 - Ensuite, faire une récursion pour générer la définition de la sous-classe en utilisant la méthode generate_class_hierarchy
                 - En passant le nom de la classe courante en tant que superclass_name et la liste super_attr en tant que superclass_args
                 - Concaténer la définition de la sous-classe à la chaîne de caractères class_defs
-
         Retourne la chaîne de caractères contenant les définitions de classes
-    
         """
 
         if "subclasses" in class_attrs:
@@ -77,7 +75,8 @@ La méthode write_content prend 2 arguments:
 La méthode utilise une clause with pour ouvrir le fichier en mode écriture ("w") en utilisant l'encodage "utf-8".
 Ensuite, elle écrit le contenu passé en argument dans le fichier à l'aide de la méthode write. 
 Après avoir terminé d'écrire dans le fichier, la méthode se termine et le fichier est automatiquement fermé grâce à l'utilisation de la clause with.
-"""    
+"""
+
 def write_content(content,filename):
         with open(filename, "w", encoding='utf-8') as f:
             f.write(content)
@@ -86,21 +85,13 @@ def write_content(content,filename):
 # Stocker le résultat de la classe dans une variable
 # Appeler la fonction write_content pour stocker le code des classes dans un fichier Python 'product_classes.py'
 
-
-
-
-
-
 def main():
     # Charger les données JSON depuis un fichier et créer la structure de l'arbre à partir du dictionnaire
     my_tree = generate_class_hierarchy(json_dict)
     # Afficher l'arbre
-    my_tree.show()
-
+#    my_tree.show()
+    write_content(my_tree,'product_classes.py')
 
 if __name__ == '__main__':
     # Appeler la fonction principale
     main()
-
-
-
