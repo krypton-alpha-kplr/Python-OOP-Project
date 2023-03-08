@@ -62,8 +62,8 @@ def generate_class_hierarchy(json_dict :dict, superclass_name:str=None,superclas
         """
 
         if "subclasses" in class_attrs:
-            super_attr=class_cont+superclass_args
-            class_attrs.remove("subclasses")
+            super_attr=list(class_attrs.keys())+superclass_args
+            super_attr.remove("subclasses")
             sous_class_def=generate_class_hierarchy(class_name, superclass_name,superclass_args)
             class_cont+= sous_class_def
     return(class_cont)
@@ -87,12 +87,16 @@ def write_content(content,filename):
 # Appeler la fonction write_content pour stocker le code des classes dans un fichier Python 'product_classes.py'
 
 
+
+
+
+
 def main():
     # Charger les données JSON depuis un fichier et créer la structure de l'arbre à partir du dictionnaire
-    json_dict = json_dict_from_file()
-    my_tree = generate_class_hierarchy(json_dict :dict, superclass_name:str=None,superclass_args:list=[])
+    my_tree = generate_class_hierarchy(json_dict)
     # Afficher l'arbre
     my_tree.show()
+
 
 if __name__ == '__main__':
     # Appeler la fonction principale
