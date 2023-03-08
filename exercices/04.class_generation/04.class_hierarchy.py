@@ -4,6 +4,8 @@ from unidecode import unidecode
 import re
 import os
 
+from class_generation import generate_class_def #  du fichier 02.class_generation.py contenant le def generate_class_def
+
 # Charger des données JSON à partir du fichier dans un dictionnaire python
 local_path = os.path.dirname(os.path.abspath(__file__))
 json_data = json.load(open(os.path.join(local_path, 'json_data.json'), "rb"))
@@ -25,6 +27,7 @@ Elle prend les arguments suivant:
     - superclass_name : une chaîne de caractères représentant le nom de la classe parente. Par défaut, sa valeur est None pour la racine de la hiérarchie.
     - superclass_args : une liste des arguments des arguments de la classe mère à passer à la classe fille.
 """
+
 def generate_class_hierarchy(json_dict :dict, superclass_name:str=None,superclass_args:list=[]):
     # Initialisation de la chaîne de caractères contenant les définitions de classes
     class_defs = ""
@@ -37,24 +40,12 @@ def generate_class_hierarchy(json_dict :dict, superclass_name:str=None,superclas
           en passant les arguments superclass_name et superclass_args comme entrées
     """
 
-    def class_def_recursive_tree_from_json(json_dict, parent_node_id):
-        for class_name, class_attrs in json_dict.items():
-            class_node_id = class_name
-            class_node_name = class_name
+    for class_name, class_attrs in json_dict.items():
+        class_cont= generate_class_def(class_name,class_attrs, superclass_name,superclass_args) # Class_Def ???????
+        class_defs+= class_cont
 
-            # Add the class node to the tree
-            tree.create_node(class_node_name, class_node_id, parent=parent_node_id)
-
-            # Traverse any subclasses
-            if "subclasses" in class_attrs:
-                recursive_tree_from_json(class_attrs["subclasses"], class_node_id)
-
-
-
-
-
-    """
-                - le résultat de la méthode generate_class_def() est stocker dans une variable 'class_def'
+        """
+                - le résultat de la méthode generate_class_def() est stocké dans une variable 'class_def'
         - Concaténer la définition de la classe à la chaîne de caractères class_defs
   
         - Ensuite, vérifier la présence des sous-classes dans la classe courante
@@ -66,12 +57,17 @@ def generate_class_hierarchy(json_dict :dict, superclass_name:str=None,superclas
                 - En passant le nom de la classe courante en tant que superclass_name et la liste super_attr en tant que superclass_args
                 - Concaténer la définition de la sous-classe à la chaîne de caractères class_defs
 
+        Retourne la chaîne de caractères contenant les définitions de classes
     
-    Retourne la chaîne de caractères contenant les définitions de classes
-    
-    """
-   
- 
+        """
+
+        if "subclasses" in class_attrs:
+            super_attr=class_cont+superclass_args
+            class_attrs.remove("subclasses")
+            sous_class_def=generate_class_hierarchy(class_name, superclass_name,superclass_args)
+            class_cont+= sous_class_def
+    return(class_cont)
+
 # la méthode write_content va nous permet d'écrire le code généré automatiquement des classes dans un fichier Python séparé
 """
 La méthode write_content prend deux arguments:
@@ -89,3 +85,18 @@ def write_content(content,filename):
 # Appeler la méthode generate_class_hierarchy pour générer le code des classes automatiquement en se basant sur le dictionnaire json_dict
 # Stocker le résultat de la classe dans une variable
 # Appeler la fonction write_content pour stocker le code des classes dans un fichier Python 'product_classes.py'
+
+
+def main():
+    # Charger les données JSON depuis un fichier et créer la structure de l'arbre à partir du dictionnaire
+    json_dict = json_dict_from_file()
+    my_tree = generate_class_hierarchy(json_dict :dict, superclass_name:str=None,superclass_args:list=[])
+    # Afficher l'arbre
+    my_tree.show()
+
+if __name__ == '__main__':
+    # Appeler la fonction principale
+    main()
+
+
+
