@@ -2,6 +2,7 @@
 import json
 from unidecode import unidecode
 import re
+import os
 
 # Charger des données JSON à partir du fichier dans un dictionnaire python
 local_path = os.path.dirname(os.path.abspath(__file__))
@@ -32,8 +33,28 @@ def generate_class_hierarchy(json_dict :dict, superclass_name:str=None,superclas
     Itération sur les éléments du dictionnaire
     pour chaque nom de classe (class_name) et attribut de cette dernière (class_attrs) dans les éléments de  json_dict, faire:
 
-        - Générer la définition de la classe avec la méthode generate_class_def() en passant les arguments superclass_name et superclass_args comme entrées
-        - le résultat de la méthode generate_class_def() est stocker dans une variable 'class_def'
+        - Générer la définition de la classe avec la méthode generate_class_def()
+          en passant les arguments superclass_name et superclass_args comme entrées
+    """
+
+    def class_def_recursive_tree_from_json(json_dict, parent_node_id):
+        for class_name, class_attrs in json_dict.items():
+            class_node_id = class_name
+            class_node_name = class_name
+
+            # Add the class node to the tree
+            tree.create_node(class_node_name, class_node_id, parent=parent_node_id)
+
+            # Traverse any subclasses
+            if "subclasses" in class_attrs:
+                recursive_tree_from_json(class_attrs["subclasses"], class_node_id)
+
+
+
+
+
+    """
+                - le résultat de la méthode generate_class_def() est stocker dans une variable 'class_def'
         - Concaténer la définition de la classe à la chaîne de caractères class_defs
   
         - Ensuite, vérifier la présence des sous-classes dans la classe courante

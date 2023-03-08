@@ -64,7 +64,7 @@ def create_tree_from_dict(tree, parent_node_id, parent_dict):
         Si "subclasses" est dans les attributs de la classe en cours (soit : valeur(class_attrs))
             Appeler récursivement la fonction pour créer les sous-noeuds de ce dictionnaire
 """
- 
+
 
 def main() :
 #    Charger les données JSON depuis un fichier et créer la structure de l'arbre à partir du dictionnaire
