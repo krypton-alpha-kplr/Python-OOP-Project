@@ -6,12 +6,22 @@ import os
 
 from class_generation import generate_class_def #  du fichier 02.class_generation.py contenant le def generate_class_def
 
+def trimspaces(data):
+    import re
+    # Define a regular expression pattern to match quoted substrings
+    pattern = r'"[^"]*"'
+    # Replace spaces and hyphens with underscore
+    #return re.sub(pattern, lambda m: m.group(0).replace(" ", "_").replace("-", "_"), str(unidecode(json.dumps(data))))
+    data_s=json.dumps(data)
+    return re.sub(pattern, lambda m: m.group(0).replace(" ", "_").replace("-", "_"), data_s)
+
+
 # Charger des données JSON à partir du fichier dans un dictionnaire python
 local_path = os.path.dirname(os.path.abspath(__file__))
 json_data = json.load(open(os.path.join(local_path, 'json_data.json'), "rb"))
 
 # Reconvertir le dictionnaire en chaine de caractere pour le traiter ensuite
-json_str = json.dumps(json_data)
+json_str = trimspaces(json_data)
 
 # Utilisation de la fonction unidecode pour enlever les accents et autres caractères spéciaux
 json_data = (unidecode(json_str))
@@ -62,7 +72,7 @@ def generate_class_hierarchy(json_dict :dict, superclass_name:str=None,superclas
         if "subclasses" in class_attrs:
             super_attr=list(class_attrs.keys() )+superclass_args
             super_attr.remove("subclasses")
-            sous_class_def=generate_class_hierarchy(class_attrs, superclass_name,superclass_args)
+            sous_class_def=generate_class_hierarchy(class_attrs["subclasses"], class_name,super_attr)
             class_defs+= sous_class_def
     return(class_defs)
 
