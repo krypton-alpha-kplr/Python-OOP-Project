@@ -1,5 +1,11 @@
 #La classe "InventoryManager" est une classe qui permet de gérer un inventaire de produits. 
 
+from typing import Dict
+
+from exercices
+from product_classes import Product.inventory_product_entry
+from inventory_product_entry import InventoryProductEntry
+
 class InventoryManager:
     # Initialisation de la classe
     def __init__(self):
@@ -12,17 +18,17 @@ class InventoryManager:
     La fonction prend un objet Product en entrée et vérifie si son nom est une clé dans le dictionnaire self.inventory. 
     Si c'est le cas, la fonction retourne True, sinon elle retourne False.
     """
-    def product_exists(self,product:Product):
-        """
+    """
         pour chaque 'inventory_product_entry_key' dans self.inventory faire:
             si 'inventory_product_entry_key' est égal à product.name alors:
                 retourner True
         retourner False
-        """
+    """
+    def product_exists (self , product:Product) :
         for inventory_product_entry_key in self.inventory:
             if inventory_product_entry_key==product.name:
-                return(True)
-            else: return (False)
+                return True
+        return False
 
     #Méthode add_product
     """
@@ -37,27 +43,29 @@ class InventoryManager:
             Créer un nouvel objet InventoryProductEntry en utilisant le produit et la quantité fournis
             Ajouter le nouvel objet au dictionnaire 'inventory'
         """
-        if assertIn (self.inventory_product_entry_key,self.inventory):
-            print("produit existe déjà dans l'inventaire :",inventory_product_entry_key," : ",self.inventory[inventory_product_entry_key])
+        if product_exists(product):
+            print("produit existe déjà dans l'inventaire :",product.name)
         else:
-            input("Entrer le nom du nouveau produit n'existant pas: ",product.name)
+            print("produit n'existant pas: ",product.name)
 
     #Méthode remove_product
     """
     La méthode remove_product est utilisée pour supprimer un produit de l'inventaire.
     Elle prend en argument un nom de produit et supprime l'entrée correspondante dans le dictionnaire 'inventory'.
     """
-    def remove_product(self, product_name):
+    def remove_product(self, product:Product):
         #Utiliser la méthode product_exists pour vérifier si le produit existe dans l'inventaire
         #Si le produit est trouvé, supprimer le de l'inventaire
         #Sinon, afficher un message d'erreur indiquant que le produit n'a pas été trouvé
-        input(f"Etes vous sur de vouloir detruire du stock inventaire le produit{product_name} (0/1)",remove:bool=0)
-        if (self.product_exists(self,product)  & (remove==1) ) :
-            product[product_name]=None
-            print("Produit créé : ",product_name,' : ',product[product_name])
+        # input(f"Etes vous sur de vouloir detruire du stock inventaire le produit{product_name} (0/1)",remove:bool=0)
+        if self.product_exists(product) :   # & (remove==1)
+            self.inventory[product.name].remove
+            """
+            product[product_name].remove
+            print("Produit créé : ",product_name,' : ',self.product[product_name])
         else:
             print('Produit NON Suprimé !')
-    
+    """
     #Méthode sell_product
     """
     La méthode sell_product est utilisée pour vendre une quantité donnée d'un produit.
