@@ -7,6 +7,7 @@ sys.path.extend(['.','..'])
 from classes.product_classes import Chaise, Pantalon
 from inventory.stock_manager import InventoryManager
 
+
 #Définition de la classe de test
 class TestInventoryManager(unittest.TestCase):
     """
@@ -23,13 +24,14 @@ class TestInventoryManager(unittest.TestCase):
 
     # Test de la méthode add_product de la classe InventoryManager
     def test_add_product(self):
-        for i range 5
-        InventoryManager.add_product(Chaise, quantity):
+        input ("Combien de Tests ? ", nbr:int>0)
+        for i in range nbr:
+            InventoryManager.add_product(Chaise, quantity)
 
-        if assertIn(f'chaise{i}', self.inventory):
-            print("Test add_product self.inventory Réussi !",f'chaise{i}')
-        else: print ("Echec Test add_product self.inventory Echoué !",f'chaise{i}')
-
+            if self.assertIn(f'chaise{i}', self.inventory):
+                print("Test add_product self.inventory Réussi !",f'chaise{i}')
+            else: print ("Echec Test add_product self.inventory Echoué !",f'chaise{i}')
+    
         """
          -Ajout de 5 chaises à l'inventaire en utilisant la méthode add_product
          -Vérification que la chaise a bien été ajoutée à l'inventaire avec la méthode assertIn ( assertIn(argument1, argument2) )
